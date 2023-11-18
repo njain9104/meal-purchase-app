@@ -1,14 +1,15 @@
+import Panel from "../core/panel/Panel";
 import MealFilters from "./sections/MealFilters";
 import MenuItems from "./sections/MenuItems";
 import Pagination from "./sections/Pagination";
 
 const MealMenu = () => {
   return (
-    <div>
+    <Panel>
       <MealFilters />
       <MenuItems />
       <Pagination />
-    </div>
+    </Panel>
   );
 };
 
