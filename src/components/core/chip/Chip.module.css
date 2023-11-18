@@ -1,0 +1,25 @@
+.chipContainer {
+  border: 1px solid #eee;
+  border-radius: 25px;
+  &.checked {
+    border-color: blue;
+  }
+  &:hover {
+    border-color: blue;
+  }
+  & > input {
+    display: none;
+  }
+  & > label {
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    display: block;
+  }
+}
+
+.chipGroupContainer {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
