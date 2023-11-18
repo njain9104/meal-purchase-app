@@ -8,7 +8,7 @@ type CheckboxGroupValue = Record<string, boolean>;
 export type CheckboxGroupProps = {
   options: Array<Omit<CheckboxProps, "onChange">>;
 } & {
-  onChange?: (value: CheckboxGroupValue) => void;
+  onChange?: (values: string[]) => void;
   className?: string;
   showAllOption?: boolean;
 };
@@ -43,8 +43,15 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
       }
     }
 
+    const checkedValues: string[] = [];
+    Object.entries(next).forEach(([name, value]) => {
+      if (value === true) {
+        checkedValues.push(name);
+      }
+    });
+
     setChecked(next);
-    onChangeFromProps?.(next);
+    onChangeFromProps?.(checkedValues);
   };
 
   const renderShowAllOption = () => {

@@ -10,7 +10,7 @@ const MealMenu = () => {
   const { fetchMealItems } = useMealContext();
 
   useEffect(() => {
-    fetchMealItems();
+    fetchMealItems({});
   }, []);
 
   return (

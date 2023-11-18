@@ -43,7 +43,7 @@ const Footer: FC<MenuItemProps> = ({ meal }) => {
     <div className={classes.mealFooterContainer}>
       <RadioGroup
         options={meal.drinks.map((drink) => {
-          return { name: drink.id, label: drink.title };
+          return { name: `${meal.id}-${drink.id}`, label: drink.title };
         })}
         name="drink"
       />
@@ -76,11 +76,13 @@ const MenuItem: FC<MenuItemProps> = ({ meal }) => {
 };
 
 const MenuItems = () => {
-  const { mealItems } = useMealContext();
+  const {
+    mealItemsResponse: { meals },
+  } = useMealContext();
 
   return (
     <Section className={classes.menuItemsContainer}>
-      {mealItems.map((meal) => (
+      {meals.map((meal) => (
         <MenuItem key={meal.id} meal={meal} />
       ))}
     </Section>

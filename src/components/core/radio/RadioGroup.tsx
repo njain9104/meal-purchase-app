@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Radio, { RadioProps } from "./Radio";
 import classes from "./Radio.module.css";
 
@@ -11,18 +11,24 @@ type RadioGroupProps = {
   className?: string;
 };
 
+const initializeOptions = (
+  options: Array<Omit<RadioProps, "onChange" | "id">>
+) => {
+  return options.reduce((acc, cur) => {
+    acc[cur.name] = cur.checked === true;
+    return acc;
+  }, {} as Record<string, boolean>);
+};
+
 const RadioGroup: FC<RadioGroupProps> = ({
   options,
   name,
   onChange: onChangeFromProps,
   className,
 }) => {
-  const [checked, setChecked] = useState<Record<string, boolean>>(() => {
-    return options.reduce((acc, cur) => {
-      acc[cur.name] = cur.checked || false;
-      return acc;
-    }, {} as Record<string, boolean>);
-  });
+  const [checked, setChecked] = useState<Record<string, boolean>>(
+    initializeOptions(options)
+  );
 
   const onChange = (name: string, value: boolean) => {
     setChecked({ [name]: value });
@@ -30,6 +36,10 @@ const RadioGroup: FC<RadioGroupProps> = ({
       onChangeFromProps(name, value);
     }
   };
+
+  useEffect(() => {
+    setChecked(initializeOptions(options));
+  }, [options]);
 
   return (
     <div className={clsx(classes.radioGroupContainer, className)}>

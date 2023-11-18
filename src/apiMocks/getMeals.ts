@@ -218,21 +218,39 @@ const data = {
   ],
 };
 
-const getMeals = async (
-  pageno: number,
-  size: number
-): Promise<{
-  pageno: number;
-  size: number;
+export const PAGE_SIZE = 3;
+
+const getMeals = async ({
+  pageNo,
+  filters = [],
+}: {
+  pageNo: number;
+  filters?: string[];
+}): Promise<{
+  pageNo: number;
   totalCount: number;
   data: Meals;
+  labels: Labels;
 }> => {
+  let meals = [...data.meals];
+  if (filters.length > 0) {
+    const filterSet = new Set(filters);
+    if (!filterSet.has("all")) {
+      meals = meals.filter((meal) => {
+        return meal.labels.some((label) => filterSet.has(label));
+      });
+    }
+  }
+
   return new Promise((resolve) => {
     const response = {
-      pageno,
-      size,
-      totalCount: data.meals.length,
-      data: data.meals.slice((pageno - 1) * size, (pageno - 1) * size + size),
+      pageNo,
+      totalCount: meals.length,
+      data: meals.slice(
+        (pageNo - 1) * PAGE_SIZE,
+        (pageNo - 1) * PAGE_SIZE + PAGE_SIZE
+      ),
+      labels: data.labels,
     };
     resolve(response);
   });
