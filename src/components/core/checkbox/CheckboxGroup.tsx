@@ -20,10 +20,14 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
   showAllOption = false,
 }) => {
   const [checked, setChecked] = useState<CheckboxGroupValue>(() => {
-    return options.reduce((acc, cur) => {
-      acc[cur.name] === cur.checked || false;
-      return acc;
-    }, {} as Record<string, boolean>);
+    const value: CheckboxGroupValue = { all: true };
+    options.forEach((cur) => {
+      if (cur.checked) {
+        value["all"] = false;
+      }
+      value[cur.name] = cur.checked || false;
+    });
+    return value;
   });
 
   const onChange = (name: string, value: boolean) => {
@@ -33,6 +37,10 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
       next["all"] = true;
     } else {
       next = { ...checked, [name]: value, all: false };
+      const isAnyChecked = Object.values(next).some((value) => value === true);
+      if (!isAnyChecked) {
+        next = { all: true };
+      }
     }
 
     setChecked(next);
