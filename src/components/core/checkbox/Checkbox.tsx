@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { FC } from "react";
+import classes from "./Checkbox.module.css";
 
 export type CheckboxProps = {
   name: string;
@@ -17,7 +18,11 @@ const Checkbox: FC<CheckboxProps> = ({
   className,
 }) => {
   return (
-    <span className={clsx(className, { ["checked"]: checked })}>
+    <span
+      className={clsx(classes.checkboxContainer, className, {
+        [classes.checked]: checked,
+      })}
+    >
       <input
         id={name}
         name={name}

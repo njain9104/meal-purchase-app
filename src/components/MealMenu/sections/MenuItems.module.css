@@ -1,11 +1,25 @@
+.menuItemsContainer {
+  & > section[class*="menuItemContainer"] {
+    &:first-of-type {
+      padding-top: 0px;
+    }
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+}
+
 .menuItemContainer {
   display: flex;
   gap: 15px;
-  margin-bottom: 20px;
 }
 
 .mealImg {
   width: 250px;
   height: 150px;
   object-fit: cover;
+}
+
+.mealDrink {
+  margin-top: 20px;
 }

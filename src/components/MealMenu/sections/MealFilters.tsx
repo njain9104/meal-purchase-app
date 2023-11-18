@@ -1,5 +1,6 @@
-import ChipGroup from "../../core/chip/ChipGroup";
+import CheckboxGroup from "../../core/checkbox/CheckboxGroup";
 import Section from "../../core/section/Section";
+import classes from "./MenuFilters.module.css";
 
 const labels = [
   {
@@ -35,10 +36,14 @@ const labels = [
 const MealFilters = () => {
   return (
     <Section>
-      <ChipGroup
-        options={labels.map((label) => {
-          return { name: label.id, label: label.label };
-        })}
+      <CheckboxGroup
+        options={[
+          ...labels.map((label) => {
+            return { name: label.id, label: label.label };
+          }),
+        ]}
+        className={classes.menuFilter}
+        showAllOption
       />
     </Section>
   );

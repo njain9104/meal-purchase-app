@@ -1,4 +1,5 @@
 import { FC } from "react";
+import RadioGroup from "../../core/radio/RadioGroup";
 import Section from "../../core/section/Section";
 import classes from "./MenuItems.module.css";
 
@@ -219,29 +220,32 @@ const Details: FC<MenuItemProps> = ({ meal }) => {
 
 const Footer: FC<MenuItemProps> = ({ meal }) => {
   return (
-    <div>
-      {meal.drinks.map((drink) => (
-        <span key={drink.id}>{drink.title}</span>
-      ))}
+    <div className={classes.mealDrink}>
+      <RadioGroup
+        options={meal.drinks.map((drink) => {
+          return { name: drink.id, label: drink.title };
+        })}
+        name="drink"
+      />
     </div>
   );
 };
 
 const MenuItem: FC<MenuItemProps> = ({ meal }) => {
   return (
-    <div className={classes.menuItemContainer}>
+    <Section className={classes.menuItemContainer}>
       <img src={meal.img} className={classes.mealImg} />
       <div>
         <Details meal={meal} />
         <Footer meal={meal} />
       </div>
-    </div>
+    </Section>
   );
 };
 
 const MenuItems = () => {
   return (
-    <Section>
+    <Section className={classes.menuItemsContainer}>
       {meals.map((meal) => (
         <MenuItem key={meal.id} meal={meal} />
       ))}

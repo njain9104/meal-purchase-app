@@ -1,0 +1,5 @@
+.menuFilter {
+  & > span[class*="checkboxContainer"] {
+    border-radius: 25px;
+  }
+}

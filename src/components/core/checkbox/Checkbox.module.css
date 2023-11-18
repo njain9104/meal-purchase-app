@@ -1,6 +1,5 @@
-.chipContainer {
+.checkboxContainer {
   border: 1px solid #eee;
-  border-radius: 25px;
   &.checked {
     border-color: blue;
   }
@@ -12,13 +11,13 @@
   }
   & > label {
     cursor: pointer;
-    padding: 10px;
+    padding: 10px 15px;
     width: 100%;
     display: block;
   }
 }
 
-.chipGroupContainer {
+.checkboxGroupContainer {
   display: flex;
   align-items: center;
   gap: 10px;

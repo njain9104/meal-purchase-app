@@ -1,14 +1,21 @@
+import clsx from "clsx";
 import { FC, useState } from "react";
-import Chip, { ChipProps } from "./Chip";
-import classes from "./Chip.module.css";
+import Radio, { RadioProps } from "./Radio";
+import classes from "./Radio.module.css";
 
-type ChipGroupProps = { options: Array<Omit<ChipProps, "onChange">> } & {
-  onChange?: (value: Record<string, boolean>) => void;
+type RadioGroupProps = {
+  options: Array<Omit<RadioProps, "onChange" | "id">>;
+} & {
+  name: string;
+  onChange?: (name: string, value: boolean) => void;
+  className?: string;
 };
 
-const ChipGroup: FC<ChipGroupProps> = ({
+const RadioGroup: FC<RadioGroupProps> = ({
   options,
+  name,
   onChange: onChangeFromProps,
+  className,
 }) => {
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     return options.reduce((acc, cur) => {
@@ -18,19 +25,20 @@ const ChipGroup: FC<ChipGroupProps> = ({
   });
 
   const onChange = (name: string, value: boolean) => {
-    setChecked((prev) => {
-      return { ...prev, [name]: value };
-    });
+    console.log(name, value);
+    setChecked({ [name]: value });
     if (onChangeFromProps) {
-      onChangeFromProps(checked);
+      onChangeFromProps(name, value);
     }
   };
+
   return (
-    <div className={classes.chipGroupContainer}>
+    <div className={clsx(classes.radioGroupContainer, className)}>
       {options.map((opt) => (
-        <Chip
+        <Radio
           key={opt.name}
-          name={opt.name}
+          id={opt.name}
+          name={name}
           label={opt.label}
           onChange={onChange}
           checked={checked[opt.name]}
@@ -40,4 +48,4 @@ const ChipGroup: FC<ChipGroupProps> = ({
   );
 };
 
-export default ChipGroup;
+export default RadioGroup;
