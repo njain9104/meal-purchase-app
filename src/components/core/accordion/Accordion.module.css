@@ -1,0 +1,15 @@
+.accordionDetailsContainer {
+  border: 2px solid blueviolet;
+  border-radius: 4px;
+}
+
+.accordionHeaderContainer {
+  padding: 10px;
+  background-color: white;
+}
+
+.accordionBodyContainer {
+  & > * {
+    padding: 15px 20px;
+  }
+}

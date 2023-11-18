@@ -1,4 +1,5 @@
 import { FC, ReactNode } from "react";
+import classes from "./Accordion.module.css";
 
 type HeaderProps = {
   children: ReactNode;
@@ -11,11 +12,13 @@ type HeaderFC = FC<HeaderProps>;
 type BodyFC = FC<BodyProps>;
 
 const Header: HeaderFC = ({ children }) => {
-  return <summary>{children}</summary>;
+  return (
+    <summary className={classes.accordionHeaderContainer}>{children}</summary>
+  );
 };
 
 const Body: BodyFC = ({ children }) => {
-  return <div>{children}</div>;
+  return <div className={classes.accordionBodyContainer}>{children}</div>;
 };
 
 type AccordionProps = {
@@ -25,7 +28,9 @@ type AccordionProps = {
 const Accordion: FC<AccordionProps> & { Header: HeaderFC; Body: BodyFC } = ({
   children,
 }) => {
-  return <details>{children}</details>;
+  return (
+    <details className={classes.accordionDetailsContainer}>{children}</details>
+  );
 };
 
 Accordion.Header = Header;
