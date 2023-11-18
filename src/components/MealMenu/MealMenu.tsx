@@ -4,7 +4,7 @@ import Panel from "../core/panel/Panel";
 import classes from "./MealMenu.module.css";
 import MealFilters from "./sections/MealFilters";
 import MealPagination from "./sections/MealPagination";
-import MenuItems from "./sections/MenuItems";
+import MenuItems from "./sections/menu_items/MenuItems";
 
 const MealMenu = () => {
   const { fetchMealItems } = useMealContext();
