@@ -7,9 +7,3 @@
   padding: 10px;
   background-color: white;
 }
-
-.accordionBodyContainer {
-  & > * {
-    padding: 15px 20px;
-  }
-}

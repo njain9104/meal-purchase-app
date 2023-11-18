@@ -18,7 +18,7 @@ const Header: HeaderFC = ({ children }) => {
 };
 
 const Body: BodyFC = ({ children }) => {
-  return <div className={classes.accordionBodyContainer}>{children}</div>;
+  return <div>{children}</div>;
 };
 
 type AccordionProps = {

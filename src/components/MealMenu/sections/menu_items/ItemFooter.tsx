@@ -27,6 +27,9 @@ const Price: FC<MenuItemProps> = ({ meal }) => {
             checkedLabel: "Selected",
           },
         ]}
+        onChange={() => {
+          //   const v = values[0];
+        }}
       />
     </div>
   );

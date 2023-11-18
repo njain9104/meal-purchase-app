@@ -2,3 +2,18 @@
   display: inline-block;
   vertical-align: middle;
 }
+
+.passengersSelection {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0px;
+  & > * {
+    width: 100%;
+    border: none;
+    padding: 5px 10px;
+    &[class*="checked"] {
+      color: black;
+      background-color: #ececf9;
+    }
+  }
+}

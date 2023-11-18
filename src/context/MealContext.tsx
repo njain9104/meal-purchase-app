@@ -49,11 +49,11 @@ const MealContext: FC<{ children: ReactNode }> = ({ children }) => {
     if (filters !== undefined) {
       filtersSelected.current = [...filters];
     }
-
     const response = await getMeals({
       pageNo: pageNo || 1,
       filters: filtersSelected.current,
     });
+
     setMealItemsResponse({
       meals: response.data,
       totalCount: response.totalCount,
