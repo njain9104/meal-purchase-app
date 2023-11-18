@@ -8,15 +8,19 @@ export type CheckboxProps = {
   checked?: boolean;
   label?: string;
   className?: string;
+  checkedLabel?: string;
 };
 
 const Checkbox: FC<CheckboxProps> = ({
   name,
   onChange,
   checked = false,
-  label,
+  label: labelFromProps,
+  checkedLabel,
   className,
 }) => {
+  const label = checked && !!checkedLabel ? checkedLabel : labelFromProps;
+
   return (
     <span
       className={clsx(classes.checkboxContainer, className, {

@@ -2,6 +2,8 @@
   border: 1px solid #eee;
   &.checked {
     border-color: blue;
+    color: blue;
+    background-color: ghostwhite;
   }
   &:hover {
     border-color: blue;

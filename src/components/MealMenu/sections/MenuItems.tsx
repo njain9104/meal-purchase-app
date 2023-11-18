@@ -1,4 +1,5 @@
 import { FC } from "react";
+import CheckboxGroup from "../../core/checkbox/CheckboxGroup";
 import RadioGroup from "../../core/radio/RadioGroup";
 import Section from "../../core/section/Section";
 import classes from "./MenuItems.module.css";
@@ -220,13 +221,21 @@ const Details: FC<MenuItemProps> = ({ meal }) => {
 
 const Footer: FC<MenuItemProps> = ({ meal }) => {
   return (
-    <div className={classes.mealDrink}>
+    <div className={classes.mealFooterContainer}>
       <RadioGroup
         options={meal.drinks.map((drink) => {
           return { name: drink.id, label: drink.title };
         })}
         name="drink"
       />
+      <div className={classes.mealPriceContainer}>
+        <div className={classes.mealPrice}>{meal.price}</div>
+        <CheckboxGroup
+          options={[
+            { name: "select", label: "Select", checkedLabel: "Selected" },
+          ]}
+        />
+      </div>
     </div>
   );
 };

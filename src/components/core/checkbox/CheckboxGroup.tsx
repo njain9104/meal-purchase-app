@@ -65,8 +65,7 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
       {options.map((opt) => (
         <Checkbox
           key={opt.name}
-          name={opt.name}
-          label={opt.label}
+          {...opt}
           onChange={onChange}
           checked={checked[opt.name] || false}
         />

@@ -25,7 +25,6 @@ const RadioGroup: FC<RadioGroupProps> = ({
   });
 
   const onChange = (name: string, value: boolean) => {
-    console.log(name, value);
     setChecked({ [name]: value });
     if (onChangeFromProps) {
       onChangeFromProps(name, value);
