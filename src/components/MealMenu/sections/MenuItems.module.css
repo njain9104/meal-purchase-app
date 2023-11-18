@@ -20,10 +20,27 @@
   object-fit: cover;
 }
 
+.menuDetailsContainer {
+  & > * {
+    margin-bottom: 5px;
+  }
+}
+
+.mealTitle {
+  color: lightgray;
+  font-size: 14px;
+}
+
+.mealDetails {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
 .mealFooterContainer {
   display: flex;
   margin-top: 20px;
-  align-items: flex-end;
+  align-items: flex;
 }
 
 .mealPriceContainer {

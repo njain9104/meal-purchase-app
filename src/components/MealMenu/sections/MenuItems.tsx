@@ -196,7 +196,9 @@ type MenuItemProps = {
 const KeyValuePair: FC<{ name: string; value: string }> = ({ name, value }) => {
   return (
     <div>
-      <span>{name}: </span>
+      <span>
+        <strong>{name}:</strong>{" "}
+      </span>
       <span>{value}</span>
     </div>
   );
@@ -204,9 +206,9 @@ const KeyValuePair: FC<{ name: string; value: string }> = ({ name, value }) => {
 
 const Details: FC<MenuItemProps> = ({ meal }) => {
   return (
-    <div>
-      <div>{meal.title}</div>
-      <div>
+    <div className={classes.menuDetailsContainer}>
+      <div className={classes.mealTitle}>{meal.title}</div>
+      <div className={classes.mealDetails}>
         Lorem ipsum dolor sit, amet consectetur adipisicing elit. Rerum quod
         saepe
       </div>
@@ -232,7 +234,11 @@ const Footer: FC<MenuItemProps> = ({ meal }) => {
         <div className={classes.mealPrice}>{meal.price}</div>
         <CheckboxGroup
           options={[
-            { name: "select", label: "Select", checkedLabel: "Selected" },
+            {
+              name: `select-${meal.id}`,
+              label: "Select",
+              checkedLabel: "Selected",
+            },
           ]}
         />
       </div>

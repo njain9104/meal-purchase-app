@@ -19,7 +19,7 @@ const RadioGroup: FC<RadioGroupProps> = ({
 }) => {
   const [checked, setChecked] = useState<Record<string, boolean>>(() => {
     return options.reduce((acc, cur) => {
-      acc[cur.name] === cur.checked || false;
+      acc[cur.name] = cur.checked || false;
       return acc;
     }, {} as Record<string, boolean>);
   });
