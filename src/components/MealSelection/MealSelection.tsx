@@ -1,11 +1,48 @@
-import { PassengerIds, useOrderContext } from "../../context/OrderContext";
+import { Meals } from "../../apiMocks/getMeals";
+import { useMealContext } from "../../context/MealContext";
+import {
+  PassengerIds,
+  PassengerSelections,
+  useOrderContext,
+} from "../../context/OrderContext";
 import PlusIcon from "../../icons/PlusIcon";
+import { getDrinkKey } from "../MealMenu/sections/menu_items/ItemFooter";
 import Accordion from "../core/accordion/Accordion";
 import RadioGroup from "../core/radio/RadioGroup";
 import classes from "./MealSelection.module.css";
 
+const getTotalPrice = (
+  passengerSelections: PassengerSelections,
+  meals: Meals
+) => {
+  let price = 0;
+
+  Object.values(passengerSelections).forEach((ps) => {
+    if (ps.meals.size > 0) {
+      meals.forEach((meal) => {
+        if (ps.meals.has(meal.id)) {
+          price += meal.price;
+          meal.drinks.forEach((drink) => {
+            if (ps.drinks.has(getDrinkKey(meal.id, drink.id)))
+              price += drink.price;
+          });
+        }
+      });
+    }
+  });
+
+  return price.toFixed(2);
+};
+
 const MealSelection = () => {
-  const { updateCurrentPassenger, currentPassenger } = useOrderContext();
+  const { updateCurrentPassenger, currentPassenger, passengerSelections } =
+    useOrderContext();
+  const { mealItemsResponse } = useMealContext();
+
+  const totalPrice = getTotalPrice(
+    passengerSelections,
+    mealItemsResponse.meals
+  );
 
   return (
     <div>
@@ -44,7 +81,7 @@ const MealSelection = () => {
           />
         </Accordion.Body>
       </Accordion>
-      <div>Total Price for all passengers</div>
+      <div>Total Price for all passengers: {totalPrice}</div>
     </div>
   );
 };

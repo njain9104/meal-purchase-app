@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Checkbox, { CheckboxProps } from "./Checkbox";
 import classes from "./Checkbox.module.css";
 
@@ -8,9 +8,24 @@ type CheckboxGroupValue = Record<string, boolean>;
 export type CheckboxGroupProps = {
   options: Array<Omit<CheckboxProps, "onChange">>;
 } & {
-  onChange?: (values: string[]) => void;
+  onChange?: (selectedValues: string[], unselectedValues: string[]) => void;
   className?: string;
   showAllOption?: boolean;
+};
+
+const initializeOptions = (
+  options: Array<Omit<CheckboxProps, "onChange">>,
+  showAllOption: boolean
+) => {
+  const value: CheckboxGroupValue = { all: true };
+  options.forEach((cur) => {
+    if (cur.checked) {
+      value["all"] = false;
+    }
+    value[cur.name] = cur.checked || false;
+  });
+  if (!showAllOption) delete value["all"];
+  return value;
 };
 
 const CheckboxGroup: FC<CheckboxGroupProps> = ({
@@ -19,16 +34,13 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
   className,
   showAllOption = false,
 }) => {
-  const [checked, setChecked] = useState<CheckboxGroupValue>(() => {
-    const value: CheckboxGroupValue = { all: true };
-    options.forEach((cur) => {
-      if (cur.checked) {
-        value["all"] = false;
-      }
-      value[cur.name] = cur.checked || false;
-    });
-    return value;
-  });
+  const [checked, setChecked] = useState<CheckboxGroupValue>(
+    initializeOptions(options, showAllOption)
+  );
+
+  useEffect(() => {
+    initializeOptions(options, showAllOption);
+  }, [options, showAllOption]);
 
   const onChange = (name: string, value: boolean) => {
     let next = {} as CheckboxGroupValue;
@@ -36,22 +48,28 @@ const CheckboxGroup: FC<CheckboxGroupProps> = ({
     if (name === "all") {
       next["all"] = true;
     } else {
-      next = { ...checked, [name]: value, all: false };
-      const isAnyChecked = Object.values(next).some((value) => value === true);
-      if (!isAnyChecked) {
-        next = { all: true };
+      next = { ...checked, [name]: value };
+      if (showAllOption) {
+        next["all"] = false;
+        const isAnyChecked = Object.values(next).some(
+          (value) => value === true
+        );
+        if (!isAnyChecked) {
+          next = { all: true };
+        }
       }
     }
 
     const checkedValues: string[] = [];
+    const uncheckedValues: string[] = [];
     Object.entries(next).forEach(([name, value]) => {
       if (value === true) {
         checkedValues.push(name);
-      }
+      } else uncheckedValues.push(name);
     });
 
     setChecked(next);
-    onChangeFromProps?.(checkedValues);
+    onChangeFromProps?.(checkedValues, uncheckedValues);
   };
 
   const renderShowAllOption = () => {

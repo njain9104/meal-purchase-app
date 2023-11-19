@@ -1,6 +1,7 @@
 import { FC } from "react";
 import { Meals } from "../../../../apiMocks/getMeals";
 import { useMealContext } from "../../../../context/MealContext";
+import { useOrderContext } from "../../../../context/OrderContext";
 import Section from "../../../core/section/Section";
 import ItemDetails from "./ItemDetails";
 import ItemFooter from "./ItemFooter";
@@ -11,12 +12,13 @@ export type MenuItemProps = {
 };
 
 const MenuItem: FC<MenuItemProps> = ({ meal }) => {
+  const { currentPassenger } = useOrderContext();
   return (
     <Section className={classes.menuItemContainer}>
       <img src={meal.img} className={classes.mealImg} />
       <div>
         <ItemDetails meal={meal} />
-        <ItemFooter meal={meal} />
+        <ItemFooter key={currentPassenger} meal={meal} />
       </div>
     </Section>
   );
