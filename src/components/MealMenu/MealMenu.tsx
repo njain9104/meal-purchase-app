@@ -14,6 +14,12 @@ const MealMenu = () => {
     fetchMealItems({});
   }, []);
 
+  useEffect(() => {
+    if (mealItemsResponse.status === "LOADING") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, [mealItemsResponse.status]);
+
   return (
     <Panel className={classes.mealMenuContainer}>
       {mealItemsResponse.status === "LOADING" ? <Loader /> : null}
