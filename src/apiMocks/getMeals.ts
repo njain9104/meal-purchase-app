@@ -232,6 +232,12 @@ const getMeals = async ({
   data: Meals;
   labels: Labels;
 }> => {
+  await new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("");
+    }, 1500);
+  });
+
   let meals = [...data.meals];
   if (filters.length > 0) {
     const filterSet = new Set(filters);

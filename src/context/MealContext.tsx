@@ -16,14 +16,18 @@ type FetchMealItemsCB = ({
   filters?: string[];
 }) => Promise<void>;
 
+type ResponseStatus = "INIT" | "LOADING" | "DONE";
+
 type MealItemsResponse = {
   meals: Meals;
   totalCount: number;
+  status: ResponseStatus;
 };
 
 const MEAL_ITEMS_RESPONSE_INIT_STATE: MealItemsResponse = {
   meals: [],
   totalCount: 0,
+  status: "INIT",
 };
 
 const Context = createContext({
@@ -43,9 +47,13 @@ const MealContext: FC<{ children: ReactNode }> = ({ children }) => {
     MEAL_ITEMS_RESPONSE_INIT_STATE
   );
   const [labels, setLabels] = useState<Labels>([]);
+
   const filtersSelected = useRef<string[]>([]);
 
   const fetchMealItems: FetchMealItemsCB = async ({ pageNo, filters }) => {
+    setMealItemsResponse((prev) => {
+      return { ...prev, status: "LOADING" };
+    });
     if (filters !== undefined) {
       filtersSelected.current = [...filters];
     }
@@ -57,6 +65,7 @@ const MealContext: FC<{ children: ReactNode }> = ({ children }) => {
     setMealItemsResponse({
       meals: response.data,
       totalCount: response.totalCount,
+      status: "DONE",
     });
     setLabels(response.labels);
   };
