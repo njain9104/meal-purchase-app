@@ -1,13 +1,10 @@
 import { FC } from "react";
 import { useOrderContext } from "../../../../context/OrderContext";
+import { getDrinkKey } from "../../../../utils";
 import CheckboxGroup from "../../../core/checkbox/CheckboxGroup";
 import RadioGroup from "../../../core/radio/RadioGroup";
 import { MenuItemProps } from "./MenuItems";
 import classes from "./MenuItems.module.css";
-
-export const getDrinkKey = (mealId: string, drinkId: string) => {
-  return `${mealId}-${drinkId}`;
-};
 
 const Drinks: FC<MenuItemProps> = ({ meal }) => {
   const { currentPassengerSelection, onSelectDrink } = useOrderContext();

@@ -6,7 +6,7 @@ import {
   useOrderContext,
 } from "../../context/OrderContext";
 import PlusIcon from "../../icons/PlusIcon";
-import { getDrinkKey } from "../MealMenu/sections/menu_items/ItemFooter";
+import { getDrinkKey } from "../../utils";
 import Accordion from "../core/accordion/Accordion";
 import RadioGroup from "../core/radio/RadioGroup";
 import classes from "./MealSelection.module.css";

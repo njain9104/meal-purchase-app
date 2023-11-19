@@ -1,4 +1,6 @@
 import { FC } from "react";
+import { useOrderContext } from "../../../../context/OrderContext";
+import { getDrinkKey } from "../../../../utils";
 import { MenuItemProps } from "./MenuItems";
 import classes from "./MenuItems.module.css";
 
@@ -14,6 +16,14 @@ const KeyValuePair: FC<{ name: string; value: string }> = ({ name, value }) => {
 };
 
 const ItemDetails: FC<MenuItemProps> = ({ meal }) => {
+  const {
+    currentPassengerSelection: { drinks },
+  } = useOrderContext();
+
+  const selectedDrink = meal.drinks.find((drink) =>
+    drinks.has(getDrinkKey(meal.id, drink.id))
+  );
+
   return (
     <div className={classes.menuDetailsContainer}>
       <div className={classes.mealTitle}>{meal.title}</div>
@@ -25,7 +35,9 @@ const ItemDetails: FC<MenuItemProps> = ({ meal }) => {
         <KeyValuePair name="Starter" value={meal.starter} />
       ) : null}
       {meal.desert ? <KeyValuePair name="Dessert" value={meal.desert} /> : null}
-      <KeyValuePair name="Selected Drink" value={meal.drinks[0].title} />
+      {selectedDrink ? (
+        <KeyValuePair name="Selected Drink" value={selectedDrink.title} />
+      ) : null}
     </div>
   );
 };
