@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { FC, ReactNode } from "react";
 import classes from "./Accordion.module.css";
 
@@ -23,13 +24,17 @@ const Body: BodyFC = ({ children }) => {
 
 type AccordionProps = {
   children: ReactNode;
+  className?: string;
 };
 
 const Accordion: FC<AccordionProps> & { Header: HeaderFC; Body: BodyFC } = ({
   children,
+  className,
 }) => {
   return (
-    <details className={classes.accordionDetailsContainer}>{children}</details>
+    <details className={clsx(classes.accordionDetailsContainer, className)}>
+      {children}
+    </details>
   );
 };
 

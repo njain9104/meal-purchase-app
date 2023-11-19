@@ -11,6 +11,11 @@ import Accordion from "../core/accordion/Accordion";
 import RadioGroup from "../core/radio/RadioGroup";
 import classes from "./MealSelection.module.css";
 
+const FLIGHT_DETAILS = {
+  name: "Riga - St PetersBurgh",
+  duration: "Flight Duration 3hr 40min",
+};
+
 const getTotalPrice = (
   passengerSelections: PassengerSelections,
   meals: Meals
@@ -46,17 +51,19 @@ const MealSelection = () => {
 
   return (
     <div>
-      <div>
+      <div className={classes.header}>
         <span>
           <PlusIcon />
         </span>
         <span>Select Meal</span>
       </div>
-      <Accordion>
+      <Accordion className={classes.passengerDetailsContainer}>
         <Accordion.Header>
           <span className={classes.flightDetailsHeader}>
-            <div>Riga - St PetersBurgh</div>
-            <div>Flight Duration 3hr 40min</div>
+            <div className={classes.flightName}>{FLIGHT_DETAILS.name}</div>
+            <div className={classes.flightDuration}>
+              {FLIGHT_DETAILS.duration}
+            </div>
           </span>
         </Accordion.Header>
         <Accordion.Body>
@@ -65,12 +72,19 @@ const MealSelection = () => {
             options={[
               {
                 name: PassengerIds.psg1,
-                label: "Adult Passenger 1",
+                label:
+                  passengerSelections[PassengerIds.psg1].meals.size > 0
+                    ? "Adult Passenger 1 (Selected)"
+                    : "Adult Passenger 1",
                 checked: currentPassenger === PassengerIds.psg1,
               },
               {
                 name: PassengerIds.psg2,
-                label: "Adult Passenger 2",
+                label:
+                  passengerSelections[PassengerIds.psg2].meals.size > 0
+                    ? "Adult Passenger 2 (Selected)"
+                    : "Adult Passenger 2",
+
                 checked: currentPassenger === PassengerIds.psg2,
               },
             ]}
@@ -81,7 +95,9 @@ const MealSelection = () => {
           />
         </Accordion.Body>
       </Accordion>
-      <div>Total Price for all passengers: {totalPrice}</div>
+      <div>
+        Total Price for all passengers: <strong>{totalPrice}</strong>
+      </div>
     </div>
   );
 };
